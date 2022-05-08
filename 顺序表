@@ -76,10 +76,3 @@ void MegerList_SQ(SQList& L1, SQList& L2) {
 	while (p2 <= p2_last) *p3++ = *p2++;
 }
 
-int main()
-{
-	SQList L;
-	initSQList(L);
-	ListInsert(L, 1, 1);
-	printf("%d", *L.elem);
-	return 1;
