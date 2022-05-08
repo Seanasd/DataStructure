@@ -57,14 +57,12 @@ int LocateElem_SQ(SQList& L, int e) {
 	else return ERROR;
 }
 
-void MegerList_SQ(SQList& L1, SQList& L2) {
+void MegerList_SQ(SQList& L1, SQList& L2, SQList &L3) {
 	//L1和L2的值按非递减排列
 	//归并L1和L2得到L3，L3中的值也按非递减排列
 	//此算法保证L1的长度+L2的长度<=LIST_INIT_SIZE
 	int* p1 = L1.elem;
 	int* p2 = L2.elem;
-	SQList L3;
-	initSQList(L3);
 	int* p3 = L3.elem;
 	int* p1_last = p1 + L1.length - 1;
 	int* p2_last = p2 + L2.length - 1;
