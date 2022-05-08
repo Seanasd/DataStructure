@@ -1,0 +1,100 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include"init.cpp"
+
+typedef struct LNode{
+	int data;
+	struct LNode* next;
+}LNode, *LinkList;
+
+int GetElem_L(LinkList L, int i, int& e) {
+	//找到L中第i个元素并用e返回
+	LNode* p = L->next;//L为头指针，不带值
+	int j = 1;
+	while (p) {
+		if (j == i) {
+			e = p->data;
+			return OK;
+		}
+		j++;
+		p = p->next;
+	}
+	return ERROR;
+}
+
+int ListInsert_L(LinkList &L, int i, int e) {
+	//在带头节点的单链线性表中的第i个元素之前插入元素e
+	LNode* p = L;
+	int j = 0;
+	while (p) {
+		if (j == i - 1) {
+			LNode* q = p->next;
+			LNode* t = (LNode*)malloc(sizeof(LNode));
+			t->data = e;
+			t->next = q;
+			p->next = t;
+			return OK;
+		}
+		j++;
+		p = p->next;
+	}
+	return ERROR;
+}
+
+int ListDelete_L(LinkList L, int i, int& e) {
+	//删除第i个元素，用e返回
+	LNode* p = L;
+	int j = 0;
+	while (p) {
+		if (j == i - 1) {
+			e = p->data;
+			LNode* q = p->next;
+			p->next = q->next;
+			free(q);
+			return OK;
+		}
+		j++;
+		p = p->next;
+	}
+	return ERROR;
+}
+
+void CreateList_L(LinkList& L, int n) {
+	L = (LinkList)malloc(sizeof(LNode));
+	L->next = NULL;
+	for (int i = n; i > 0; i--) {
+		LNode* p = (LNode*)malloc(sizeof(LNode));
+		scanf("%d", &p->data);
+		p->next = L->next;
+		L->next = p;
+	}
+}
+
+void MergeList_L(LinkList& La, LinkList& Lb, LinkList& Lc) {
+	LNode* pa = La->next;
+	LNode* pb = Lb->next;
+	Lc = La;
+	LinkList pc = Lc;
+	while (pa && pb) {
+		if (pa->data <= pb->data) {
+			pc->next = pa;
+			pc = pa;
+			pa = pa->next;
+		}
+		else {
+			pc->next = pb;
+			pc = pb;
+			pb = pb->next;
+		}
+	}
+	while (pa) {
+		pc->next = pa;
+		pc = pa;
+		pa = pa->next;
+	}
+	while (pb) {
+		pc->next = pb;
+		pc = pb;
+		pb = pb->next;
+	}
+}
